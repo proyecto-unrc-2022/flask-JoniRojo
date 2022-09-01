@@ -1,6 +1,4 @@
 import json
-from multiprocessing import context
-from tkinter import W
 from behave import *
 from application import USERS
 
@@ -28,7 +26,7 @@ def step_impl(context):
 def step_impl(context):
     assert 'marty' not in USERS
 
-@when('I store the costumer "marty"')
+@when('I store the custumer "marty"')
 def step_impl(context):
     new_user = { 'username' : 'marty',
                  'name' : 'San Martin'
