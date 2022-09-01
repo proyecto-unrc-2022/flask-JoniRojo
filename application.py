@@ -13,9 +13,18 @@ def access_users(username):
     if request.method == 'GET':
         user_details = USERS.get(username)
         if user_details:
-            return jsonify(user_details)
+            return jsonify(user_details), 200
         else:
             return Response(status=404)
+
+@app.route("/users", methods=['POST'])
+def add_users():
+    if request.method == 'POST':
+        if (request.form['username'] not in USERS):
+          USERS.update({request.form['username'] : {'name': request.form['name']}})
+          return Response(status=201)
+        else: 
+          return Response(status=404)
 
 if __name__ == "__main__":
     app.run()
