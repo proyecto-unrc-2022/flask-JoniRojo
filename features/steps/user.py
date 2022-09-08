@@ -92,7 +92,7 @@ def step_impl(context):
     context.page = context.client.get('/users')
     assert context.page
 
-@then("the following user data are returned")
+@then("the following user data is returned")
 def step_impl(context):
     for row in context.table:
         assert row[0] in context.page.text

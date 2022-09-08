@@ -30,7 +30,7 @@ Feature: Handle storing, retrieving and deleting customer details # test/feature
   Scenario: List all system users
     Given that I have users are in the system
     When I receive a request to show the users list
-    Then the following user data are returned:
+    Then the following user data is returned:
       | username | name           |
       | jasonb   | Jason Bourne   |
       | nikk     | Niki Lauda     |
