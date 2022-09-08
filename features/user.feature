@@ -18,13 +18,13 @@ Feature: Handle storing, retrieving and deleting customer details # test/feature
     Given the user "nikk" are in the system
     When I update the customer "nikk"
     Then the system performs the update
-    And the following user details are returned:
+    And the following user details returned:
       | name       |
       | Niki Lauda |
 
   Scenario: Remove an user
-    Given the user 'goncho' are in the system
-    When the system delete the customer 'goncho'
+    Given the user "nikk" are in the system
+    When the system delete the customer 'nikk'
     Then the system informs the user was deleted
 
   Scenario: List all system users
@@ -34,4 +34,3 @@ Feature: Handle storing, retrieving and deleting customer details # test/feature
       | username | name           |
       | jasonb   | Jason Bourne   |
       | nikk     | Niki Lauda     |
-      | goncho   | Gonzalo Banzas |

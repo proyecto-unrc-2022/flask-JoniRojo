@@ -13,7 +13,7 @@ def step_impl(context):
 
 @then(u'I should get a \'200\' response')
 def step_impl(context):
-    assert context.page.status_code is 200
+    assert context.page.status_code == 200
 
 @then(u'the following user details are returned')
 def step_impl(context):
@@ -36,7 +36,7 @@ def step_impl(context):
 
 @then(u'I should get a \'201\' response')
 def step_impl(context):
-    assert context.page.status_code is 201
+    assert context.page.status_code == 201
 
 @then('"marty" is in the database')
 def step_impl(context):
@@ -58,26 +58,22 @@ def step_impl(context):
 
 @then(u'the system performs the update')
 def step_impl(context):
-    assert context.page.status_code is 200
+    assert context.page.status_code == 200
 
-@then('the following user details are returned')
+@then('the following user details returned')
 def step_impl(context):
     assert "Niki Lauda" in context.page.text
 
 #-----------------------------
 
-@given('the user "goncho" are in the system')
-def step_impl(context):
-    USERS.update({'goncho': {'name': 'Gonzalo Banzas'}})
-
-@when('the system delete the customer "goncho"')
+@when(u"the system delete the customer '{uname}'")
 def step_impl(context, uname):
-    context.page = context.client.delete('/users/{}'.format('goncho'))
+    context.page = context.client.delete('/users/{}'.format(uname))
     assert context.page
 
 @then("the system informs the user was deleted")
 def step_impl(context):
-    assert context.page.status_code is 200
+    assert context.page.status_code == 200
 
 #-----------------------------
 
