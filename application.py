@@ -8,7 +8,7 @@ USERS = {}
 def index():
     return 'Index Page'
 
-@app.route("/users/<username>", methods=['GET'])
+@app.route("/users/<username>", methods=['GET', 'PUT','DELETE'])
 def access_users(username):
     if request.method == 'GET':
         user_details = USERS.get(username)
@@ -16,10 +16,23 @@ def access_users(username):
             return jsonify(user_details), 200
         else:
             return Response(status=404)
+    elif request.method == 'PUT':
+        if username in USERS:
+            USERS.update({username: {'name': request.form['name']}})
+            return jsonify(USERS.get(username)), 200
+        else:
+            return Response(status=404)
+    elif request.method == 'DELETE':
+        if username in USERS:
+            return USERS.pop(username)
+        else:
+            return Response(status=404)
 
-@app.route("/users", methods=['POST'])
+@app.route("/users", methods=['POST', 'GET'])
 def add_users():
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return jsonify(USERS)
+    elif request.method == 'POST':
         if (request.form['username'] not in USERS):
           USERS.update({request.form['username'] : {'name': request.form['name']}})
           return Response(status=201)

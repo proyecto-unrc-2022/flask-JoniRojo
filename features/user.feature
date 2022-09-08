@@ -14,10 +14,24 @@ Feature: Handle storing, retrieving and deleting customer details # test/feature
     Then I should get a '201' response
     And "marty" is in the database
 
-  #Scenario: Get operation to list all system users
-   # Given that I have users are in the system
-    #When I retrieve all the customers
-    #Then I should get a '200' response
-    #And the following user details are returned:
-    #  | name        |
-    #  | Jason Borne |  ... ??
+  Scenario: Update a user
+    Given the user "nikk" are in the system
+    When I update the customer "nikk"
+    Then the system performs the update
+    And the following user details are returned:
+      | name       |
+      | Niki Lauda |
+
+  Scenario: Remove an user
+    Given the user 'goncho' are in the system
+    When the system delete the customer 'goncho'
+    Then the system informs the user was deleted
+
+  Scenario: List all system users
+    Given that I have users are in the system
+    When I receive a request to show the users list
+    Then the following user data are returned:
+      | username | name           |
+      | jasonb   | Jason Bourne   |
+      | nikk     | Niki Lauda     |
+      | goncho   | Gonzalo Banzas |

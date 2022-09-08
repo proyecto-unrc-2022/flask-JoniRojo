@@ -44,10 +44,55 @@ def step_impl(context):
 
 #-----------------------------
 
-#@given('that I have users are in the system')
-#def step_impl(context):
-#    USERS
+@given('the user "nikk" are in the system')
+def step_impl(context):
+    USERS.update({'nikk': {'name': 'Nikki Lauda'}})
 
-#@when('I retrieve all the customers')
-#def step_impl(context):
-#    context.page = context.client.get('') ... ??
+@when('I update the customer "nikk"')
+def step_impl(context):
+    payload = { 'username': 'nikk',
+                'name': 'Niki Lauda' 
+              }
+    context.page = context.client.put('/users/{}'.format('nikk'), data = payload)
+    assert context.page
+
+@then(u'the system performs the update')
+def step_impl(context):
+    assert context.page.status_code is 200
+
+@then('the following user details are returned')
+def step_impl(context):
+    assert "Niki Lauda" in context.page.text
+
+#-----------------------------
+
+@given('the user "goncho" are in the system')
+def step_impl(context):
+    USERS.update({'goncho': {'name': 'Gonzalo Banzas'}})
+
+@when('the system delete the customer "goncho"')
+def step_impl(context, uname):
+    context.page = context.client.delete('/users/{}'.format('goncho'))
+    assert context.page
+
+@then("the system informs the user was deleted")
+def step_impl(context):
+    assert context.page.status_code is 200
+
+#-----------------------------
+
+@given('that I have users are in the system')
+def step_impl(context):
+    USERS.update({'jasonb': {'name': 'Jason Bourne'}})
+    USERS.update({'nikk': {'name': 'Niki Lauda'}})
+    USERS.update({'goncho': {'name': 'Gonzalo Banzas'}})
+
+@when("I receive a request to show the users list")
+def step_impl(context):
+    context.page = context.client.get('/users')
+    assert context.page
+
+@then("the following user data are returned")
+def step_impl(context):
+    for row in context.table:
+        assert row[0] in context.page.text
